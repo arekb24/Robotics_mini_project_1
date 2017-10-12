@@ -21,9 +21,6 @@ end
 
 setQ({-3.142, -0.827, -3.002, -3.143, 0.099, -1.573})
 attach(bottle,gripper)
-// setQ({0, 0, 0, 0, 0, 0})
-// rw.sleep(1)
-setQ({1.571, 0.006, 0.03, 0.153, 0.762, 4.49})
-attach(bottle,table)
-// setQ({0, 0, 0, 0, 0, 0})
 
+attach(bottle,table)
+setQ({1.571, 0.006, 0.03, 0.153, 0.762, 4.49})

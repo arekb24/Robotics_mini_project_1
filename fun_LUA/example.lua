@@ -1,11 +1,28 @@
-wc = rws . getRobWorkStudio (): getWorkCell ()
-state = wc : getDefaultState ()
-device = wc : findDevice ( ‘ ‘ KukaKr16 ’ ’)
-function setQ ( q )
-qq = rw . Q (# q , q [1] , q [2] , q [3] , q [4] , q [5] , q [6])
-device : setQ ( qq , state )
-rws . getRobWorkStudio (): setState ( state )
-rw . sleep (0.5)
+wc = rws.getRobWorkStudio():getWorkCell()
+state = wc:getDefaultState()
+device = wc:findDevice("KukaKr16")
+gripper = wc:findFrame("Tool");
+bottle = wc:findFrame("Bottle");
+table = wc:findFrame("Table");
+
+function setQ(q)
+qq = rw.Q(#q,q[1],q[2],q[3],q[4],q[5],q[6])
+device:setQ(qq,state)
+rws.getRobWorkStudio():setState(state)
+rw.sleep(0.1)
 end
-setQ ({3 , -1 , -2 , -1 , -0 , -1})
-setQ ({3 , -2 , -1 , -1 , -0 , -1})
+
+function attach(obj, tool)
+rw.gripFrame(obj, tool, state)
+rws.getRobWorkStudio():setState(state)
+rw.sleep(1)
+end
+
+
+setQ({-3.142, -0.827, -3.002, -3.143, 0.099, -1.573})
+attach(bottle,gripper)
+setQ({0, 0, 0, 0, 0, 0})
+rw.sleep(1)
+setQ({1.571, 0.006, 0.03, 0.153, 0.762, 4.49})
+attach(bottle,table)
+setQ({0, 0, 0, 0, 0, 0})
