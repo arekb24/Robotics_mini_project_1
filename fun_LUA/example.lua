@@ -1,0 +1,11 @@
+wc = rws . getRobWorkStudio (): getWorkCell ()
+state = wc : getDefaultState ()
+device = wc : findDevice ( ‘ ‘ KukaKr16 ’ ’)
+function setQ ( q )
+qq = rw . Q (# q , q [1] , q [2] , q [3] , q [4] , q [5] , q [6])
+device : setQ ( qq , state )
+rws . getRobWorkStudio (): setState ( state )
+rw . sleep (0.5)
+end
+setQ ({3 , -1 , -2 , -1 , -0 , -1})
+setQ ({3 , -2 , -1 , -1 , -0 , -1})
