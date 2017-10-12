@@ -45,6 +45,7 @@ int main(int argc, char** argv) {
 
 	WorkCell::Ptr wc = WorkCellLoader::Factory::load(wcFile);
 
+
 	Device::Ptr device = wc->findDevice(deviceName);
 
 	if (device == NULL) {
