@@ -3,6 +3,7 @@
 #include <rwlibs/pathplanners/rrt/RRTPlanner.hpp>
 #include <rwlibs/pathplanners/rrt/RRTQToQPlanner.hpp>
 #include <rwlibs/proximitystrategies/ProximityStrategyFactory.hpp>
+#include <fstream> // for writing to a file
 
 using namespace std;
 using namespace rw::common;
@@ -70,9 +71,8 @@ int main(int argc, char** argv) {
 	QMetric::Ptr metric = MetricFactory::makeEuclidean<Q>();
 	double extend = 0.1;
 	QToQPlanner::Ptr planner = RRTPlanner::makeQToQPlanner(constraint, sampler, metric, extend, RRTPlanner::RRTConnect);
-
+	
 	Q from(6,-3.142, -0.827, -3.002, -3.143, 0.099, -1.573);
-	//Q to(6,1.7,0.6,-0.8,0.3,0.7,-0.5); // Very difficult for planner
 	Q to(6,1.571, 0.006, 0.03, 0.153, 0.762, 4.49);
 
 	if (!checkCollisions(device, state, detector, from))
@@ -92,9 +92,47 @@ int main(int argc, char** argv) {
 	}
 
 	for (QPath::iterator it = path.begin(); it < path.end(); it++) {
-		cout << *it << endl;
+		cout << *it <<endl;
 	}
+	// Save the generated path to a .lua file
+	// Getting time: https://stackoverflow.com/questions/22318389/pass-system-date-and-time-as-a-filename-in-c
+	time_t timeNow = time(0); // Current time
+	struct tm * now = localtime( & timeNow );
+	char timeBuffer [80];
+     	strftime (timeBuffer,80,"path_%Y-%m-%d.lua",now);
+     	std::ofstream LUAfile;
+     	LUAfile.open (timeBuffer);
+	LUAfile << "wc = rws.getRobWorkStudio():getWorkCell()\n";
+	LUAfile << "state = wc:getDefaultState()\n";
+	LUAfile << "device = wc:findDevice(\"KukaKr16\")\n";
+	LUAfile << "gripper = wc:findFrame(\"Tool\");\n";
+	LUAfile << "bottle = wc:findFrame(\"Bottle\");\n";
+	LUAfile << "table = wc:findFrame(\"Table\");\n";
 
+	LUAfile << "function setQ(q)\n";
+	LUAfile << "qq = rw.Q(#q,q[1],q[2],q[3],q[4],q[5],q[6])\n";
+	LUAfile << "device:setQ(qq,state)\n";
+	LUAfile << "rws.getRobWorkStudio():setState(state)\n";
+	LUAfile << "rw.sleep(0.1)\n";
+	LUAfile << "end\n";
+
+	LUAfile << "function attach(obj, tool)\n";
+	LUAfile << "rw.gripFrame(obj, tool, state)\n";
+	LUAfile << "rws.getRobWorkStudio():setState(state)\n";
+	LUAfile << "rw.sleep(1)\n";
+	LUAfile << "end\n";
+
+
+	LUAfile << "setQ({-3.142, -0.827, -3.002, -3.143, 0.099, -1.573})\n";
+	LUAfile << "attach(bottle,gripper)\n";
+  	
+	for (QPath::iterator it = path.begin(); it < path.end(); it++) {
+
+		LUAfile << "setQ(" << *it << ")" <<endl;
+	}
+	LUAfile << "setQ({1.571, 0.006, 0.03, 0.153, 0.762, 4.49})\n";
+	LUAfile << "attach(bottle,table)\n";
+	LUAfile << "LUAfile.close();\n";
 	cout << "Program done." << endl;
 	return 0;
 }
