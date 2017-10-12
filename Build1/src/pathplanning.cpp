@@ -71,9 +71,9 @@ int main(int argc, char** argv) {
 	double extend = 0.1;
 	QToQPlanner::Ptr planner = RRTPlanner::makeQToQPlanner(constraint, sampler, metric, extend, RRTPlanner::RRTConnect);
 
-	Q from(6,-0.2,-0.6,1.5,0.0,0.6,1.2);
+	Q from(6,-3.142, -0.827, -3.002, -3.143, 0.099, -1.573);
 	//Q to(6,1.7,0.6,-0.8,0.3,0.7,-0.5); // Very difficult for planner
-	Q to(6,1.4,-1.3,1.5,0.3,1.3,1.6);
+	Q to(6,1.571, 0.006, 0.03, 0.153, 0.762, 4.49);
 
 	if (!checkCollisions(device, state, detector, from))
 		return 0;
