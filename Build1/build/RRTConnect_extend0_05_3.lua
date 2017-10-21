@@ -8,7 +8,7 @@ function setQ(q)
 qq = rw.Q(#q,q[1],q[2],q[3],q[4],q[5],q[6])
 device:setQ(qq,state)
 rws.getRobWorkStudio():setState(state)
-rw.sleep(0.1)
+rw.sleep(0.01)
 end
 function attach(obj, tool)
 rw.gripFrame(obj, tool, state)

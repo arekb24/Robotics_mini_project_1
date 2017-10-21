@@ -13,7 +13,7 @@
     <RPY>0 0 180</RPY> <Pos> 0 0 0.0 </Pos>
 </Frame>
  <Drawable name="ToolUnit" refframe="ToolMount">
-	 <Polytope file="Geometry/ToolUnitWithBottle" />
+	 <Polytope file="Geometry/ToolUnit" />
  </Drawable>
 
 <Frame name="Tool" refframe="ToolMount">
