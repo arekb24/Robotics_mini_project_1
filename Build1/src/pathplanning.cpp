@@ -68,6 +68,8 @@ int main(int argc, char** argv) {
 	//QToQPlanner::Ptr planner = RRTPlanner::makeQToQPlanner(constraint, device, RRTPlanner::RRTConnect);
 
 	/** More complex way: allows more detailed definition of parameters and methods */
+	
+	
 	QSampler::Ptr sampler = QSampler::makeConstrained(QSampler::makeUniform(device),constraint.getQConstraintPtr());
 	QMetric::Ptr metric = MetricFactory::makeEuclidean<Q>();
 	double extend = 0.1;
@@ -75,6 +77,15 @@ int main(int argc, char** argv) {
 	
 	Q from(6,-3.142, -0.827, -3.002, -3.143, 0.099, -1.573);
 	Q to(6,1.571, 0.006, 0.03, 0.153, 0.762, 4.49);
+
+	device->setQ(from,state);
+	rw::kinematics::Kinematics::gripFrame(wc->findDevice("Bottle"), wc->findDevice("Tool"), state);
+
+
+
+	
+
+	
 
 	if (!checkCollisions(device, state, detector, from))
 		return 0;
