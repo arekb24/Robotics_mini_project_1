@@ -4,6 +4,7 @@
 #include <rwlibs/pathplanners/rrt/RRTQToQPlanner.hpp>
 #include <rwlibs/proximitystrategies/ProximityStrategyFactory.hpp>
 #include <fstream> // for writing to a file
+#include <sstream> // for processing the string
 
 using namespace std;
 using namespace rw::common;
@@ -99,7 +100,7 @@ int main(int argc, char** argv) {
 	time_t timeNow = time(0); // Current time
 	struct tm * now = localtime( & timeNow );
 	char timeBuffer [80];
-     	strftime (timeBuffer,80,"path_%Y-%m-%d.lua",now);
+     	strftime (timeBuffer,80,"path_%Y-%m-%d %H:%M:%S.lua",now);
      	std::ofstream LUAfile;
      	LUAfile.open (timeBuffer);
 	LUAfile << "wc = rws.getRobWorkStudio():getWorkCell()\n";
@@ -127,12 +128,15 @@ int main(int argc, char** argv) {
 	LUAfile << "attach(bottle,gripper)\n";
   	
 	for (QPath::iterator it = path.begin(); it < path.end(); it++) {
-
-		LUAfile << "setQ(" << *it << ")" <<endl;
+		std::string itString = boost::lexical_cast<std::string>(*it);
+		//Remove first 4 characters, e.g. Q[6]:
+		itString = itString.erase(0,4);
+		LUAfile << "setQ(" << itString << ")" <<endl;
 	}
 	LUAfile << "setQ({1.571, 0.006, 0.03, 0.153, 0.762, 4.49})\n";
 	LUAfile << "attach(bottle,table)\n";
 	LUAfile << "LUAfile.close();\n";
+
 	cout << "Program done." << endl;
 	return 0;
 }

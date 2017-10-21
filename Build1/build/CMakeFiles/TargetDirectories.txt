@@ -1,3 +1,0 @@
-/media/arkadiusz/06E4789FE47892A3/Robotics_mini_project_1/Build1/build/CMakeFiles/edit_cache.dir
-/media/arkadiusz/06E4789FE47892A3/Robotics_mini_project_1/Build1/build/CMakeFiles/rebuild_cache.dir
-/media/arkadiusz/06E4789FE47892A3/Robotics_mini_project_1/Build1/build/CMakeFiles/Build1.dir
