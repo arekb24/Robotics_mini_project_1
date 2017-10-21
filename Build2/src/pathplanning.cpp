@@ -41,35 +41,22 @@ bool checkCollisions(Device::Ptr device, const State &state, const CollisionDete
 }
 
 int main(int argc, char** argv) {
-	// Set the seed
+	// Added a random seed
 	rw::math::Math::seed();
+	// Changed to a custom path
 	const string wcFile = "../../Kr16WallWorkCell/Scene.wc.xml";
 	const string deviceName = "KukaKr16";
 	cout << "Trying to use workcell " << wcFile << " and device " << deviceName << endl;
 
 	WorkCell::Ptr wc = WorkCellLoader::Factory::load(wcFile);
-
-
 	Device::Ptr device = wc->findDevice(deviceName);
-
-
 	if (device == NULL) {
 		cerr << "Device: " << deviceName << " not found!" << endl;
 		return 0;
 	}
+	const State state = wc->getDefaultState();
 
-	const State & state = wc->getDefaultState();
-	// const State state = wc->getDefaultState();
-	const string bottle = "Bottle";
-	Device::Ptr devBottle = wc->findDevice(bottle);
-	const string tool = "Tool";
-	Device::Ptr devTool = wc->findDevice(tool);
-
-	//rw::kinematics::Kinematics::gripFrame(wc->findDevice("Bottle"), wc->findDevice("Tool"), wc->getDefaultState());
-	//rw::kinematics::Kinematics::gripFrame(devBottle, devTool, state);
-	//rw::common::Frame frame =wc->findDevice("");
 	CollisionDetector detector(wc, ProximityStrategyFactory::makeDefaultCollisionStrategy());
-
 	PlannerConstraint constraint = PlannerConstraint::make(&detector,device,state);
 
 	/** Most easy way: uses default parameters based on given device
@@ -79,18 +66,13 @@ int main(int argc, char** argv) {
 	//QToQPlanner::Ptr planner = RRTPlanner::makeQToQPlanner(constraint, device, RRTPlanner::RRTConnect);
 
 	/** More complex way: allows more detailed definition of parameters and methods */
-	
-	
 	QSampler::Ptr sampler = QSampler::makeConstrained(QSampler::makeUniform(device),constraint.getQConstraintPtr());
 	QMetric::Ptr metric = MetricFactory::makeEuclidean<Q>();
-	//double extend = 0.1;
-	double extend = 0.5;
+	double extend = 0.1;
 	QToQPlanner::Ptr planner = RRTPlanner::makeQToQPlanner(constraint, sampler, metric, extend, RRTPlanner::RRTConnect);
-	
+
+	// CHange with custom Q values
 	Q from(6,-3.142, -0.827, -3.002, -3.143, 0.099, -1.573);
-	// Attach the bottle to the tool
-	// device->setQ(from,state);
-	//rw::kinematics::Kinematics::gripFrame(devBottle, devTool, state);
 	Q to(6,1.571, 0.006, 0.03, 0.153, 0.762, 4.49);
 
 	if (!checkCollisions(device, state, detector, from))
@@ -110,10 +92,9 @@ int main(int argc, char** argv) {
 	}
 
 	for (QPath::iterator it = path.begin(); it < path.end(); it++) {
-		cout << *it <<endl;
+		cout << *it << endl;
 	}
-	// Save the generated path to a .lua file
-	// Getting time: https://stackoverflow.com/questions/22318389/pass-system-date-and-time-as-a-filename-in-c
+	// Part of the code for writing the .LUA script to the file ------------
 	time_t timeNow = time(0); // Current time
 	struct tm * now = localtime( & timeNow );
 	char timeBuffer [80];
@@ -153,6 +134,8 @@ int main(int argc, char** argv) {
 	LUAfile << "setQ({1.571, 0.006, 0.03, 0.153, 0.762, 4.49})\n";
 	LUAfile << "attach(bottle,table)\n";
 	LUAfile << "LUAfile.close();\n";
+
+	// End of the .LUA script writing part ---------------------------------
 
 	cout << "Program done." << endl;
 	return 0;
