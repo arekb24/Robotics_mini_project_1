@@ -52,23 +52,30 @@ int main(int argc, char** argv) {
 	const State state = wc->getDefaultState();
 
 	CollisionDetector detector(wc, ProximityStrategyFactory::makeDefaultCollisionStrategy());
+
 	PlannerConstraint constraint = PlannerConstraint::make(&detector,device,state);
 
 	/** Most easy way: uses default parameters based on given device
 		sampler: QSampler::makeUniform(device)
 		metric: PlannerUtil::normalizingInfinityMetric(device->getBounds())
-		extend: 0.05 */
+	extend: 0.05 */
 	//QToQPlanner::Ptr planner = RRTPlanner::makeQToQPlanner(constraint, device, RRTPlanner::RRTConnect);
 
+	
 	/** More complex way: allows more detailed definition of parameters and methods */
+	Q from(6,-0.2,-0.6,1.5,0.0,0.6,1.2);
+	//Q to(6,1.7,0.6,-0.8,0.3,0.7,-0.5); // Very difficult for planner
+	Q to(6,1.4,-1.3,1.5,0.3,1.3,1.6);
+
+	device->setQ(from,state);
+	Kinematics::gripFrame(wc->findDevice("Bottle"), wc->findDevice("Tool"), state);
+	
 	QSampler::Ptr sampler = QSampler::makeConstrained(QSampler::makeUniform(device),constraint.getQConstraintPtr());
 	QMetric::Ptr metric = MetricFactory::makeEuclidean<Q>();
 	double extend = 0.1;
 	QToQPlanner::Ptr planner = RRTPlanner::makeQToQPlanner(constraint, sampler, metric, extend, RRTPlanner::RRTConnect);
 
-	Q from(6,-0.2,-0.6,1.5,0.0,0.6,1.2);
-	//Q to(6,1.7,0.6,-0.8,0.3,0.7,-0.5); // Very difficult for planner
-	Q to(6,1.4,-1.3,1.5,0.3,1.3,1.6);
+	
 
 	if (!checkCollisions(device, state, detector, from))
 		return 0;
