@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/student/Desktop/workspace/Robotics_mini_project_1/Build1
+CMAKE_SOURCE_DIR = /media/arkadiusz/06E4789FE47892A3/Robotics_mini_project_1/Build1
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/student/Desktop/workspace/Robotics_mini_project_1/Build1/build
+CMAKE_BINARY_DIR = /media/arkadiusz/06E4789FE47892A3/Robotics_mini_project_1/Build1/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/Build1.dir/depend.make
@@ -59,16 +59,16 @@ include CMakeFiles/Build1.dir/flags.make
 
 CMakeFiles/Build1.dir/src/pathplanning.cpp.o: CMakeFiles/Build1.dir/flags.make
 CMakeFiles/Build1.dir/src/pathplanning.cpp.o: ../src/pathplanning.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/student/Desktop/workspace/Robotics_mini_project_1/Build1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Build1.dir/src/pathplanning.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Build1.dir/src/pathplanning.cpp.o -c /home/student/Desktop/workspace/Robotics_mini_project_1/Build1/src/pathplanning.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/arkadiusz/06E4789FE47892A3/Robotics_mini_project_1/Build1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Build1.dir/src/pathplanning.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Build1.dir/src/pathplanning.cpp.o -c /media/arkadiusz/06E4789FE47892A3/Robotics_mini_project_1/Build1/src/pathplanning.cpp
 
 CMakeFiles/Build1.dir/src/pathplanning.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Build1.dir/src/pathplanning.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/student/Desktop/workspace/Robotics_mini_project_1/Build1/src/pathplanning.cpp > CMakeFiles/Build1.dir/src/pathplanning.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/arkadiusz/06E4789FE47892A3/Robotics_mini_project_1/Build1/src/pathplanning.cpp > CMakeFiles/Build1.dir/src/pathplanning.cpp.i
 
 CMakeFiles/Build1.dir/src/pathplanning.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Build1.dir/src/pathplanning.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/student/Desktop/workspace/Robotics_mini_project_1/Build1/src/pathplanning.cpp -o CMakeFiles/Build1.dir/src/pathplanning.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/arkadiusz/06E4789FE47892A3/Robotics_mini_project_1/Build1/src/pathplanning.cpp -o CMakeFiles/Build1.dir/src/pathplanning.cpp.s
 
 CMakeFiles/Build1.dir/src/pathplanning.cpp.o.requires:
 
@@ -90,27 +90,27 @@ Build1_EXTERNAL_OBJECTS =
 
 Build1: CMakeFiles/Build1.dir/src/pathplanning.cpp.o
 Build1: CMakeFiles/Build1.dir/build.make
-Build1: /home/student/RobWork/RobWork/libs/release/librw_lua_s.a
-Build1: /home/student/RobWork/RobWork/libs/release/liblua51.a
-Build1: /home/student/RobWork/RobWork/libs/release/librw_algorithms.so
-Build1: /home/student/RobWork/RobWork/libs/release/librw_pathplanners.so
-Build1: /home/student/RobWork/RobWork/libs/release/librw_pathoptimization.so
-Build1: /home/student/RobWork/RobWork/libs/release/librw_simulation.so
-Build1: /home/student/RobWork/RobWork/libs/release/librw_opengl.so
-Build1: /home/student/RobWork/RobWork/libs/release/librw_assembly.so
-Build1: /home/student/RobWork/RobWork/libs/release/librw_task.so
-Build1: /home/student/RobWork/RobWork/libs/release/librw_calibration.so
-Build1: /home/student/RobWork/RobWork/libs/release/librw_csg.so
-Build1: /home/student/RobWork/RobWork/libs/release/librw_control.so
-Build1: /home/student/RobWork/RobWork/libs/release/librw_proximitystrategies.so
-Build1: /home/student/RobWork/RobWork/libs/release/libyaobi.a
-Build1: /home/student/RobWork/RobWork/libs/release/libpqp.a
-Build1: /home/student/RobWork/RobWork/libs/release/libfcl.so
-Build1: /home/student/RobWork/RobWork/libs/release/librw.so
+Build1: /home/arkadiusz/RobWork/RobWork/cmake/../libs/release/librw_lua_s.a
+Build1: /home/arkadiusz/RobWork/RobWork/cmake/../libs/release/liblua51.a
+Build1: /home/arkadiusz/RobWork/RobWork/cmake/../libs/release/librw_algorithms.so
+Build1: /home/arkadiusz/RobWork/RobWork/cmake/../libs/release/librw_pathplanners.so
+Build1: /home/arkadiusz/RobWork/RobWork/cmake/../libs/release/librw_pathoptimization.so
+Build1: /home/arkadiusz/RobWork/RobWork/cmake/../libs/release/librw_simulation.so
+Build1: /home/arkadiusz/RobWork/RobWork/cmake/../libs/release/librw_opengl.so
+Build1: /home/arkadiusz/RobWork/RobWork/cmake/../libs/release/librw_assembly.so
+Build1: /home/arkadiusz/RobWork/RobWork/cmake/../libs/release/librw_task.so
+Build1: /home/arkadiusz/RobWork/RobWork/cmake/../libs/release/librw_calibration.so
+Build1: /home/arkadiusz/RobWork/RobWork/cmake/../libs/release/librw_csg.so
+Build1: /home/arkadiusz/RobWork/RobWork/cmake/../libs/release/librw_control.so
+Build1: /home/arkadiusz/RobWork/RobWork/cmake/../libs/release/librw_proximitystrategies.so
+Build1: /home/arkadiusz/RobWork/RobWork/cmake/../libs/release/libyaobi.a
+Build1: /home/arkadiusz/RobWork/RobWork/cmake/../libs/release/libpqp.a
+Build1: /home/arkadiusz/RobWork/RobWork/cmake/../libs/release/libfcl.so
+Build1: /home/arkadiusz/RobWork/RobWork/cmake/../libs/release/librw.so
 Build1: /usr/lib/x86_64-linux-gnu/libGLU.so
 Build1: /usr/lib/x86_64-linux-gnu/libGL.so
 Build1: /usr/lib/x86_64-linux-gnu/libxerces-c.so
-Build1: /home/student/RobWork/RobWork/libs/release/librw_assimp.a
+Build1: /usr/lib/x86_64-linux-gnu/libassimp.so
 Build1: /usr/lib/x86_64-linux-gnu/libboost_filesystem.so
 Build1: /usr/lib/x86_64-linux-gnu/libboost_regex.so
 Build1: /usr/lib/x86_64-linux-gnu/libboost_serialization.so
@@ -123,13 +123,11 @@ Build1: /usr/lib/x86_64-linux-gnu/libboost_atomic.so
 Build1: /usr/lib/x86_64-linux-gnu/libpthread.so
 Build1: /usr/lib/x86_64-linux-gnu/libboost_test_exec_monitor.a
 Build1: /usr/lib/x86_64-linux-gnu/libboost_unit_test_framework.so
-Build1: /home/student/RobWork/RobWork/libs/release/librw_qhull.a
-Build1: /home/student/RobWork/RobWork/libs/release/librw_csgjs.a
-Build1: /home/student/RobWork/RobWork/libs/release/librw_unzip.a
-Build1: /usr/lib/x86_64-linux-gnu/libz.so
+Build1: /home/arkadiusz/RobWork/RobWork/cmake/../libs/release/librw_qhull.a
+Build1: /home/arkadiusz/RobWork/RobWork/cmake/../libs/release/librw_csgjs.a
 Build1: /usr/lib/x86_64-linux-gnu/libdl.so
 Build1: CMakeFiles/Build1.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/student/Desktop/workspace/Robotics_mini_project_1/Build1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable Build1"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/media/arkadiusz/06E4789FE47892A3/Robotics_mini_project_1/Build1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable Build1"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Build1.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -146,6 +144,6 @@ CMakeFiles/Build1.dir/clean:
 .PHONY : CMakeFiles/Build1.dir/clean
 
 CMakeFiles/Build1.dir/depend:
-	cd /home/student/Desktop/workspace/Robotics_mini_project_1/Build1/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/student/Desktop/workspace/Robotics_mini_project_1/Build1 /home/student/Desktop/workspace/Robotics_mini_project_1/Build1 /home/student/Desktop/workspace/Robotics_mini_project_1/Build1/build /home/student/Desktop/workspace/Robotics_mini_project_1/Build1/build /home/student/Desktop/workspace/Robotics_mini_project_1/Build1/build/CMakeFiles/Build1.dir/DependInfo.cmake --color=$(COLOR)
+	cd /media/arkadiusz/06E4789FE47892A3/Robotics_mini_project_1/Build1/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /media/arkadiusz/06E4789FE47892A3/Robotics_mini_project_1/Build1 /media/arkadiusz/06E4789FE47892A3/Robotics_mini_project_1/Build1 /media/arkadiusz/06E4789FE47892A3/Robotics_mini_project_1/Build1/build /media/arkadiusz/06E4789FE47892A3/Robotics_mini_project_1/Build1/build /media/arkadiusz/06E4789FE47892A3/Robotics_mini_project_1/Build1/build/CMakeFiles/Build1.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/Build1.dir/depend
 

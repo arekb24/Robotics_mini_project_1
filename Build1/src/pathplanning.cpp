@@ -41,6 +41,8 @@ bool checkCollisions(Device::Ptr device, const State &state, const CollisionDete
 }
 
 int main(int argc, char** argv) {
+	// Set the seed
+	rw::math::Math::seed();
 	const string wcFile = "../../Kr16WallWorkCell/Scene.wc.xml";
 	const string deviceName = "KukaKr16";
 	cout << "Trying to use workcell " << wcFile << " and device " << deviceName << endl;
@@ -50,13 +52,23 @@ int main(int argc, char** argv) {
 
 	Device::Ptr device = wc->findDevice(deviceName);
 
+
 	if (device == NULL) {
 		cerr << "Device: " << deviceName << " not found!" << endl;
 		return 0;
 	}
 
-	const State state = wc->getDefaultState();
-
+	const State & state = wc->getDefaultState();
+	// const State state = wc->getDefaultState();
+	const string bottle = "Bottle";
+	Device::Ptr devBottle = wc->findDevice(bottle);
+	const string tool = "Tool";
+	Device::Ptr devTool = wc->findDevice(tool);
+	// Attach the bottle to the tool
+	// rw::kinematics::Kinematics::gripFrame(wc->findDevice("Bottle"), wc->findDevice("Tool"), state);
+	//rw::kinematics::Kinematics::gripFrame(wc->findDevice("Bottle"), wc->findDevice("Tool"), wc->getDefaultState());
+	//rw::kinematics::Kinematics::gripFrame(devBottle, devTool, state);
+	//rw::common::Frame frame =wc->findDevice("");
 	CollisionDetector detector(wc, ProximityStrategyFactory::makeDefaultCollisionStrategy());
 
 	PlannerConstraint constraint = PlannerConstraint::make(&detector,device,state);
@@ -73,19 +85,11 @@ int main(int argc, char** argv) {
 	QSampler::Ptr sampler = QSampler::makeConstrained(QSampler::makeUniform(device),constraint.getQConstraintPtr());
 	QMetric::Ptr metric = MetricFactory::makeEuclidean<Q>();
 	double extend = 0.1;
+	//double extend = 0.5;
 	QToQPlanner::Ptr planner = RRTPlanner::makeQToQPlanner(constraint, sampler, metric, extend, RRTPlanner::RRTConnect);
 	
 	Q from(6,-3.142, -0.827, -3.002, -3.143, 0.099, -1.573);
 	Q to(6,1.571, 0.006, 0.03, 0.153, 0.762, 4.49);
-
-	device->setQ(from,state);
-	rw::kinematics::Kinematics::gripFrame(wc->findDevice("Bottle"), wc->findDevice("Tool"), state);
-
-
-
-	
-
-	
 
 	if (!checkCollisions(device, state, detector, from))
 		return 0;

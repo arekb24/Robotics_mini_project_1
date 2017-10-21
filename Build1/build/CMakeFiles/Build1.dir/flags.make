@@ -6,5 +6,5 @@ CXX_FLAGS = -std=c++11  -Wall -Wno-strict-aliasing -Wno-unused-function -Wno-pra
 
 CXX_DEFINES = -DBOOST_DISABLE_ASSERTS
 
-CXX_INCLUDES = -I/home/student/RobWork/RobWork/cmake/../ext/boostbindings -I/usr/local/include/eigen3 -I/home/student/RobWork/RobWork/cmake/../src -I/home/student/RobWork/RobWork/cmake/../ext/rwyaobi -I/home/student/RobWork/RobWork/cmake/../ext/rwpqp -I/home/student/RobWork/RobWork/cmake/../ext/lua/src -I/home/student/RobWork/RobWork/cmake/../ext/qhull/src -I/home/student/RobWork/RobWork/cmake/../ext/csgjs/src -I/home/student/RobWork/RobWork/cmake/../ext/unzip -I/home/student/RobWork/RobWork/cmake/../ext/assimp/include 
+CXX_INCLUDES = -I/home/arkadiusz/RobWork/RobWork/cmake/../ext/boostbindings -I/usr/include/eigen3 -I/home/arkadiusz/RobWork/RobWork/cmake/../src -I/home/arkadiusz/RobWork/RobWork/cmake/../ext/rwyaobi -I/home/arkadiusz/RobWork/RobWork/cmake/../ext/rwpqp -I/home/arkadiusz/RobWork/RobWork/cmake/../ext/lua/src -I/home/arkadiusz/RobWork/RobWork/cmake/../ext/qhull/src -I/home/arkadiusz/RobWork/RobWork/cmake/../ext/csgjs/src -I/usr/include/assimp 
 
