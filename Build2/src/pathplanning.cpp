@@ -54,10 +54,7 @@ int main(int argc, char** argv) {
 		cerr << "Device: " << deviceName << " not found!" << endl;
 		return 0;
 	}
-	const State state = wc->getDefaultState();
-
-	CollisionDetector detector(wc, ProximityStrategyFactory::makeDefaultCollisionStrategy());
-	PlannerConstraint constraint = PlannerConstraint::make(&detector,device,state);
+	//const State state = wc->getDefaultState();
 
 	/** Most easy way: uses default parameters based on given device
 		sampler: QSampler::makeUniform(device)
@@ -66,20 +63,25 @@ int main(int argc, char** argv) {
 	//QToQPlanner::Ptr planner = RRTPlanner::makeQToQPlanner(constraint, device, RRTPlanner::RRTConnect);
 
 	/** More complex way: allows more detailed definition of parameters and methods */
-	QSampler::Ptr sampler = QSampler::makeConstrained(QSampler::makeUniform(device),constraint.getQConstraintPtr());
-	QMetric::Ptr metric = MetricFactory::makeEuclidean<Q>();
-	double extend = 0.1;
-	QToQPlanner::Ptr planner = RRTPlanner::makeQToQPlanner(constraint, sampler, metric, extend, RRTPlanner::RRTConnect);
-
-	// CHange with custom Q values
+	const string bottle = "Bottle";
+	const string tool = "Tool";
+// Change with custom Q values
 	Q from(6,-3.142, -0.827, -3.002, -3.143, 0.099, -1.573);
 	Q to(6,1.571, 0.006, 0.03, 0.153, 0.762, 4.49);
+State state = wc->getDefaultState();
+	device->setQ(from,state);
+	rw::kinematics::Kinematics::gripFrame(wc->findFrame(bottle),wc->findFrame(tool),state);
+	CollisionDetector detector(wc, ProximityStrategyFactory::makeDefaultCollisionStrategy());
+	PlannerConstraint constraint = PlannerConstraint::make(&detector,device,state);
+	QSampler::Ptr sampler = QSampler::makeConstrained(QSampler::makeUniform(device),constraint.getQConstraintPtr());
+	QMetric::Ptr metric = MetricFactory::makeEuclidean<Q>();
+	double extend = 0.01;
 
 	if (!checkCollisions(device, state, detector, from))
 		return 0;
 	if (!checkCollisions(device, state, detector, to))
 		return 0;
-
+	QToQPlanner::Ptr planner = RRTPlanner::makeQToQPlanner(constraint, sampler, 		metric, extend, RRTPlanner::RRTConnect);
 	cout << "Planning from " << from << " to " << to << endl;
 	QPath path;
 	Timer t;
@@ -112,7 +114,7 @@ int main(int argc, char** argv) {
 	LUAfile << "qq = rw.Q(#q,q[1],q[2],q[3],q[4],q[5],q[6])\n";
 	LUAfile << "device:setQ(qq,state)\n";
 	LUAfile << "rws.getRobWorkStudio():setState(state)\n";
-	LUAfile << "rw.sleep(0.1)\n";
+	LUAfile << "rw.sleep(0.01)\n";
 	LUAfile << "end\n";
 
 	LUAfile << "function attach(obj, tool)\n";
