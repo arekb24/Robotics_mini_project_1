@@ -202,8 +202,8 @@ int main(int argc, char** argv) {
 	}
 	LUAfile << "setQ({1.571, 0.006, 0.03, 0.153, 0.762, 4.49})\n";
 	LUAfile << "attach(bottle,table)\n";
-	LUAfile << "Path of length: " << plength << "\n" ;
-	LUAfile << "Time elapsed: " << texp << "\n";
+	LUAfile << "-- Path of length: " << plength << "\n" ;
+	LUAfile << "-- Time elapsed: " << texp << "\n";
 
 	LUAfile << "LUAfile.close();\n";
 

@@ -66,8 +66,8 @@ int main(int argc, char** argv) {
 	const string bottle = "Bottle";
 	const string tool = "Tool";
 // Change with custom Q values
-	Q from(6,-1.80529, -0.581856, -2.3189, -3.40377, 0.00840079, -2.44402);
-	Q to(6,-1.80529, -0.581856, -2.3189, -3.40377, 0.00840079, -1.127);
+	Q from(6,-3.142, -0.827, -3.002, -3.143, 0.099, -1.573);
+	Q to(6,-1.501, -1.071, -1.662, -3.40377, 1.257, -1.127);
 
 State state = wc->getDefaultState();
 	device->setQ(from,state);
@@ -76,7 +76,7 @@ State state = wc->getDefaultState();
 	PlannerConstraint constraint = PlannerConstraint::make(&detector,device,state);
 	QSampler::Ptr sampler = QSampler::makeConstrained(QSampler::makeUniform(device),constraint.getQConstraintPtr());
 	QMetric::Ptr metric = MetricFactory::makeEuclidean<Q>();
-	double extend = 0.1;
+	double extend = 3;
 
 	if (!checkCollisions(device, state, detector, from))
 		return 0;
