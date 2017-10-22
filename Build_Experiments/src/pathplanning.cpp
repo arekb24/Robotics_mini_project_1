@@ -73,49 +73,52 @@ int main(int argc, char** argv) {
 		cerr << "Device: " << deviceName << " not found!" << endl;
 		return 0;
 	}
-	//const State state = wc->getDefaultState();
-
-	/** Most easy way: uses default parameters based on given device
-		sampler: QSampler::makeUniform(device)
-		metric: PlannerUtil::normalizingInfinityMetric(device->getBounds())
-		extend: 0.05 */
-	//QToQPlanner::Ptr planner = RRTPlanner::makeQToQPlanner(constraint, device, RRTPlanner::RRTConnect);
-
-	/** More complex way: allows more detailed definition of parameters and methods */
+	
 	const string bottle = "Bottle";
 	const string tool = "Tool";
-// Change with custom Q values
+	// Change with custom Q values
 	Q from(6,-3.142, -0.827, -3.002, -3.143, 0.099, -1.573);
 	Q to(6,1.571, 0.006, 0.03, 0.153, 0.762, 4.49);
 
-State state = wc->getDefaultState();
+	State state = wc->getDefaultState();
 	device->setQ(from,state);
-	// Attach the bottle frame to the tool frame using gripFrame. This allow us the tool to grip the bottle.
+	// Attach the bottle frame to the tool frame using gripFrame. This allow
+	// us the tool to grip the bottle.
 	// We must consider this for the planner!!
-	rw::kinematics::Kinematics::gripFrame(wc->findFrame(bottle),wc->findFrame(tool),state);
-	// Collision detector for a workcell wc [IN] . The collision detector is initialized with the strategy. Notice that the
+	rw::kinematics::Kinematics::gripFrame(wc->findFrame(bottle),
+	wc->findFrame(tool),state);
+	// Collision detector for a workcell wc [IN] . The collision detector is
+	// initialized with the strategy. Notice that the
 	// collision detector will create and store models inside the strategy.
-	// ProximityStrat... [in/out] function to create a default available collision strategy. Returns null if no collision
+	// ProximityStrat... [in/out] function to create a default available 
+	// collision strategy. Returns null if no collision
 	// strategies are availble else a ptr to a collision strategy.
-	CollisionDetector detector(wc, ProximityStrategyFactory::makeDefaultCollisionStrategy());
-
-	/* A planner constraint is a small copyable object containing pointers to a configuration constraint and an edge constraint.
-	Sampling based path planners and path optimizers typically use a PlannerConstraint object for the collision checking for the paths.
-	A number of make() utility constructors are provided for applications where defaults for configuration and edge constraint can be used.
+	CollisionDetector detector(wc, 
+	ProximityStrategyFactory::makeDefaultCollisionStrategy());
+	/* A planner constraint is a small copyable object containing pointers 
+	to a configuration constraint and an edge constraint.
+	Sampling based path planners and path optimizers typically use a 
+	PlannerConstraint object for the collision checking for the paths.
+	A number of make() utility constructors are provided for applications where defaults
+	for configuration and edge constraint can be used.
 	Path are checked discretely for a default device dependent resolution.
 	*/
 
 	PlannerConstraint constraint = PlannerConstraint::make(&detector,device,state);
 
 	// QSampler : Interface for the sampling configuration. 
-	// QSampler::makeConstrained  A sampler filtered by a constraint. For each call of sample() up to maxAttemps configurations
-	// are extracted from sampler and checked by constraint. The first sample that satisfies the constraint is returned, if no
+	// QSampler::makeConstrained  A sampler filtered by a constraint. For 
+	// each call of sample() up to maxAttemps configurations
+	// are extracted from sampler and checked by constraint. The first 
+	// sample that satisfies the constraint is returned, if no
 	// such were found the empty configuration is returned.
 
-	QSampler::Ptr sampler = QSampler::makeConstrained(QSampler::makeUniform(device),constraint.getQConstraintPtr());
+	QSampler::Ptr sampler = QSampler::makeConstrained(QSampler::makeUniform	
+	(device),constraint.getQConstraintPtr());
 
 
-	// Metrics on configurations. The constructor functions are parametrized by a type Vector. Euclidean dist for vector types.
+	// Metrics on configurations. The constructor functions are parametrized
+	// by a type Vector. Euclidean dist for vector types.
 	// Distance between two points: dist[p and q] = sqrt(sum[(pi-qi)^2])
 
 	QMetric::Ptr metric = MetricFactory::makeEuclidean<Q>();
@@ -128,7 +131,8 @@ State state = wc->getDefaultState();
 		return 0;
 	if (!checkCollisions(device, state, detector, to))
 		return 0;
-	// QToQPlanner> Path Planner interface from start configuration to a goal configuration.
+	// QToQPlanner> Path Planner interface from start configuration to a 
+	// goal configuration.
 	/*
 	RRT based point-to-point planner.
 
@@ -136,19 +140,23 @@ State state = wc->getDefaultState();
     constraint	[in] Constraint for configurations and edges.
     sampler	[in] Sampler of the configuration space.
     metric	[in] Metric for nearest neighbor search.
-    extend	[in] Distance measured by metric by which to extend the tree towards an attractor configuration.
+    extend	[in] Distance measured by metric by which to extend the tree 
+   		     towards an attractor configuration.
     type	[in] The particular variation the RRT planner algorithm.
 	*/
-	QToQPlanner::Ptr planner = RRTPlanner::makeQToQPlanner(constraint, sampler, metric, extend, RRTPlanner::RRTConnect);
+	QToQPlanner::Ptr planner = RRTPlanner::makeQToQPlanner(constraint, 
+	sampler, metric, extend, RRTPlanner::RRTConnect);
 	cout << "Planning from " << from << " to " << to << endl;
 	QPath path;
 	Timer t;
 	t.resetAndResume();
 	planner->query(from,to,path,MAXTIME);
 	t.pause();
-	cout << "Path of length " << path.size() << " found in " << t.getTime() << " seconds." << endl;
+	cout << "Path of length " << path.size() << " found in " << 
+	t.getTime() << " seconds." << endl;
 	if (t.getTime() >= MAXTIME) {
-		cout << "Notice: max time of " << MAXTIME << " seconds reached." << endl;
+		cout << "Notice: max time of " << MAXTIME << 
+		" seconds reached." << endl;
 	}
 	double texp =  t.getTime();
 	int plength = path.size();
@@ -156,7 +164,6 @@ State state = wc->getDefaultState();
 		cout << *it << endl;
 	}
 	// Save the generated path to a .lua file
-	// Getting time: https://stackoverflow.com/questions/22318389/pass-system-date-and-time-as-a-filename-in-c
 	time_t timeNow = time(0); // Current time
 	struct tm * now = localtime( & timeNow );
 	char timeBuffer [80];
